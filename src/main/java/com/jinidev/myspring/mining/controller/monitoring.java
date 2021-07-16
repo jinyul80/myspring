@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/mining")
 public class monitoring {
 
-    @GetMapping("dashboard")
+    @GetMapping("/")
     public String dashboard() {
         return "mining/dashboard";
     }
