@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class monitoring {
 
     @Autowired
-    private MinerLogRepository minerLogRepository;
+    private MinerLogRepository repository;
 
     @GetMapping("/")
     public String dashboard() {

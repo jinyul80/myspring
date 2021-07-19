@@ -2,11 +2,10 @@ package com.jinidev.myspring.mining;
 
 import com.jinidev.myspring.mining.model.MinerLog;
 import com.jinidev.myspring.mining.repository.MinerLogRepository;
+import com.jinidev.myspring.mining.service.MinerLogService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
@@ -14,6 +13,9 @@ public class MinerLogRepositoryTest {
 
     @Autowired
     private MinerLogRepository repository;
+
+    @Autowired
+    private MinerLogService service;
 
     @Test
     public void findCount() {
@@ -34,7 +36,30 @@ public class MinerLogRepositoryTest {
                     ml.getTemperature(), ml.getFanSpeed(), ml.getHashRate(), ml.getCoreClock(), ml.getMemoryClock(),
                     ml.getPower(), ml.getEfficiency()));
         }
+    }
 
+    @Test
+    public void getWorkerList(){
+        List<String> workerList = service.GetWorkerList();
+        System.out.println(workerList);
+    }
+
+    @Test
+    public void getGpuIdList(){
+        List<String> workerList = service.GetWorkerList();
+
+        for (String worker: workerList) {
+            System.out.println("**** Worker:" + worker + "****");
+
+            List<Integer> gpuIdList = service.GetGpuIdList(worker);
+
+            for (int id:gpuIdList) {
+                String gpuName = service.getGpuName(worker, id);
+                System.out.println("ID:" + id + ", Gpu Name:" + gpuName);
+            }
+
+            System.out.println();
+        }
     }
 
 }
