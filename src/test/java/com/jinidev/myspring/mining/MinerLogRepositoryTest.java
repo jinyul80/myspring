@@ -1,7 +1,7 @@
 package com.jinidev.myspring.mining;
 
-import com.fasterxml.jackson.databind.node.MissingNode;
 import com.jinidev.myspring.mining.model.MinerLog;
+import com.jinidev.myspring.mining.model.MinerLogHistory;
 import com.jinidev.myspring.mining.repository.MinerLogRepository;
 import com.jinidev.myspring.mining.service.MinerLogService;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.HashMap;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @SpringBootTest
@@ -39,10 +39,10 @@ public class MinerLogRepositoryTest {
 
         for (int i = startNum; i < log.size() ; i++) {
             MinerLog ml = log.get(i);
-            System.out.println(String.format("%d %ty-%tm-%td %s %d %s %.0f %d %d %d %d %d %.0f", ml.getPk(),
+            System.out.printf("%d %ty-%tm-%td %s %d %s %.0f %d %d %d %d %d %.0f%n", ml.getPk(),
                     ml.getDate(), ml.getDate(), ml.getDate(), ml.getWorker(), ml.getGpuId(), ml.getGpuName(),
                     ml.getTemperature(), ml.getFanSpeed(), ml.getHashRate(), ml.getCoreClock(), ml.getMemoryClock(),
-                    ml.getPower(), ml.getEfficiency()));
+                    ml.getPower(), ml.getEfficiency());
         }
     }
 
@@ -74,10 +74,12 @@ public class MinerLogRepositoryTest {
     public void getLogHistory(){
         String day = "-1";
 
-        List<Object[]> logList = service.GetLogHistory(day);
+        List<MinerLogHistory> logList = service.GetLogHistory(day);
 
-        for (Object[] log: logList ) {
-            System.out.printf("%s %s %s %d %n", log[0], log[1], log[2], Integer.parseInt(log[3].toString()));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        for (MinerLogHistory log: logList ) {
+            System.out.printf("%s %s %s %d %n", sdf.format(log.getDate()), log.getWorker(), log.getGpuName(), log.getHashRate());
         }
     }
 

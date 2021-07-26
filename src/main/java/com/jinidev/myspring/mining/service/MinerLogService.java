@@ -1,6 +1,7 @@
 package com.jinidev.myspring.mining.service;
 
 import com.jinidev.myspring.mining.model.MinerLog;
+import com.jinidev.myspring.mining.model.MinerLogHistory;
 import com.jinidev.myspring.mining.repository.MinerLogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,10 +45,9 @@ public class MinerLogService {
         return opt.orElse("");
     }
 
-    public List<Object[]> GetLogHistory(String day) {
-        List<Object[]> logList = repository.getLogHistory(day);
+    public List<MinerLogHistory> GetLogHistory(String day) {
 
-        return logList;
+        return repository.getLogHistory(day);
     }
 
 }
