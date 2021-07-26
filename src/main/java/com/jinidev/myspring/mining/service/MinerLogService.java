@@ -33,7 +33,7 @@ public class MinerLogService {
                 .collect(Collectors.toList());
     }
 
-    public String getGpuName(String worker, int gpuId){
+    public String GetGpuName(String worker, int gpuId){
         List<MinerLog> log = repository.findByWorkerAndGpuId(worker, gpuId);
 
         Optional<String> opt = log.stream()
@@ -43,4 +43,11 @@ public class MinerLogService {
 
         return opt.orElse("");
     }
+
+    public List<Object[]> GetLogHistory(String day) {
+        List<Object[]> logList = repository.getLogHistory(day);
+
+        return logList;
+    }
+
 }
